@@ -1,0 +1,30 @@
+name: CD Pipeline
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Deploy to dev
+        if: github.ref == 'refs/heads/dev'
+        run: |
+          cd /Users/kedarnanda/myprojects/dockerproject/dev/docker-demo-app
+          git pull origin dev
+          docker compose down
+          docker compose up -d
+          echo "Deployed to DEV ✅"
+
+      - name: Deploy to prod
+        if: github.ref == 'refs/heads/main'
+        run: |
+          cd /Users/kedarnanda/myprojects/dockerproject/prod/docker-demo-app
+          git pull origin main
+          docker compose down
+          docker compose up -d
+          echo "Deployed to PROD ✅"
