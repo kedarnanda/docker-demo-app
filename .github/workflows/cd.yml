@@ -15,7 +15,8 @@ jobs:
         if: github.ref == 'refs/heads/dev'
         run: |
           cd /Users/kedarnanda/myprojects/dockerproject/dev/docker-demo-app
-          git pull origin dev
+          git fetch origin dev
+          git reset --hard origin/dev
           docker compose down
           docker compose up -d
           echo "Deployed to DEV ✅"
@@ -24,7 +25,8 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           cd /Users/kedarnanda/myprojects/dockerproject/prod/docker-demo-app
-          git pull origin main
+          git fetch origin main
+          git reset --hard origin/main
           docker compose down
           docker compose up -d
           echo "Deployed to PROD ✅"
